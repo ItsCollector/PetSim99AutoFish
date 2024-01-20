@@ -49,6 +49,8 @@ F1::
     while (true)
     { 
         ; Coordinates and colour hex for a white pixel when the fishing mini-games shows ingame
+        ; Change these if you are not on 1920x1080p, use F6 to grab any white pixel from mini-game text around the bottom
+        ; middle of screen
         xCord := 772
         yCord := 597
         colour := 0xFFFFFF
@@ -70,7 +72,7 @@ F1::
         {   
             GuiControl,, ActionText, Casting line
 
-            Sleep, 500 ; delay for after reeling in fish
+            Sleep, 500 ; delay for after reeling in fish 
             Click, 960, 540 
             Sleep, 500 ; delay to check if fish has bitten first
 
@@ -93,7 +95,7 @@ F2:: ; Reloads script, use when you want to stop the macro without closing it
     Reload
     return
 
-^F6:: ; LControl + F6 to grab coordinates of mouse position, use if you need to change any of the coordinates
+F6:: ; LControl + F6 to grab coordinates of mouse position, use if you need to change any of the coordinates
     MouseGetPos, MouseX, MouseY
     MsgBox, Mouse Coordinates:`nX: %MouseX%`nY: %MouseY%
     return
