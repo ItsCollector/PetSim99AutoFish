@@ -6,6 +6,8 @@ Requires AutoHotKey v2 installed on your system
 
 YouTube demonstration (out of date, please update Collector): https://www.youtube.com/watch?v=SnuKIOsgnUc&t=4s
 
+For whatever reason the main script isn't in a separate folder when you download, please put it in one so the config file created when you first exit the macro saves in the same directory.
+
 You'll need F6 if you play on resolutions other than 1920x1080 to edit line 16 and 17. This is the coordinates for any white pixel on the "Keep tapping to reel" text.
 
 Lines you may have to edit depending on your system and internet connection (I can't make this suit everyone without being very generous on the timings). Lines grouped together on the list serve the same purpose so make them the same if you change them.
