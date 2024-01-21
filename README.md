@@ -1,8 +1,8 @@
 Requires AutoHotKey v2 installed on your system
 
-F1 to activate the macro when it's open
-F2 to deactivate the macro when it's active
-F6 to grab coordinates of the current mouse positon
+- F1 to activate the macro when it's open
+- F2 to deactivate the macro when it's active
+- F6 to grab coordinates of the current mouse positon
 
 You'll need F6 if you play on resolutions other than 1920x1080 until I make the macro cross-compatible from the start.
 
