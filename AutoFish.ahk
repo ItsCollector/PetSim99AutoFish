@@ -95,7 +95,7 @@ F2:: ; Reloads script, use when you want to stop the macro without closing it
     Reload
     return
 
-F6:: ; LControl + F6 to grab coordinates of mouse position, use if you need to change any of the coordinates
+F6:: ; F6 to grab coordinates of mouse position, use if you need to change any of the coordinates
     MouseGetPos, MouseX, MouseY
     MsgBox, Mouse Coordinates:`nX: %MouseX%`nY: %MouseY%
     return
