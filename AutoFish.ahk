@@ -21,7 +21,7 @@ Gui, Add, Text, x10 y100, Current Action:
 Gui, Add, Text, x140 y100 w100 h30 Center vActionText, % currentAction 
 
 ; If you wish to change the default location of the GUI, edit the X and Y variables of the line below
-; Bare in mind, it takes your screen resolution and takes away another number
+; Bare in mind, it takes your screen resolution and takes away another number to get the total offset 
 ; the bigger the number, the further left or up it will be
 Gui, Show, % "x" A_ScreenWidth - 1900 " y" A_ScreenHeight - 1060 " w" 300 " h" 160, Script Status
 
