@@ -4,6 +4,8 @@ Requires AutoHotKey v2 installed on your system
 - F2 to deactivate the macro when it's active
 - F6 to grab coordinates of the current mouse positon
 
+YouTube demonstration: https://www.youtube.com/watch?v=SnuKIOsgnUc&t=4s
+
 You'll need F6 if you play on resolutions other than 1920x1080 until I make the macro cross-compatible from the start.
 
 If you play on other resolutions, you'll need to edit these lines:
