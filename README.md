@@ -2,7 +2,7 @@ Requires AutoHotKey v2 installed on your system
 
 F1 to activate the macro when it's open
 F2 to deactivate the macro when it's active
-F6 to grab coordinates of the current mouse positon 
+F6 to grab coordinates of the current mouse positon
 
 You'll need F6 if you play on resolutions other than 1920x1080 until I make the macro cross-compatible from the start.
 
@@ -12,5 +12,7 @@ If you play on other resolutions, you'll need to edit these lines:
 
 Between lines 58 and 83, you may edit the timings so it's suited to your internet connection. If you have better internet, you may use tigher timings, and vice versa. 
 Would not recommend changing lines 73 unless you are having trouble recasting fishing rod after catching one. Don't really need to change line 75.
+
+Open in notepad or a code editor to change the lines specified
 
 The code is commented so you may understand how it works. Enjoy easy afk fishing!
