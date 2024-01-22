@@ -1,4 +1,5 @@
 Requires AutoHotKey v2 installed on your system
+
 Download it from here: https://www.autohotkey.com/
 
 - F1 to activate the macro when it's open
