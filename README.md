@@ -2,6 +2,7 @@ Requires AutoHotKey v2 installed on your system
 
 Download it from here: https://www.autohotkey.com/
 
+When you download the macro file, extract all and open the "AutoFish.ahk" file
 - F1 to activate the macro when it's open
 - F2 to deactivate the macro when it's active
 - F6 to grab coordinates of the current mouse positon, will show in a message box on screen
