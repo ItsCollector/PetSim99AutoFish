@@ -1,4 +1,4 @@
-﻿; Environment variables
+; Environment variables
 #NoEnv  
 #Warn  
 #SingleInstance, Force  
@@ -6,22 +6,30 @@ SendMode Input
 SetWorkingDir %A_ScriptDir%  
 
 ; Initialise script variables
-global workerActive, initialised, currentAction, filePath, guiPosX, guiPosY, hasClanBoost, multiplier, fishingZone, whitePixel_xCord, whitePixel_yCord, lbPixel_xCord, lbPixel_yCord, lbHexCode, shanty_xCord, shanty_yCord, forest_xCord, forest_yCord, tp_xCord, tp_yCord, ShantyScrollCount, ForestScrollCount
+global workerActive, initialised, currentAction, filePath, guiPosX, guiPosY, hasClanBoost, multiplier, fishingZone, whitePixel_xCord, whitePixel_yCord, lbPixel_xCord, lbPixel_yCord, lbHexCode, shanty_xCord, shanty_yCord, forest_xCord, forest_yCord, tp_xCord, tp_yCord, ShantyScrollCount, ForestScrollCount, topLeft_greenPlay_xCord, topLeft_greenPlay_yCord, bottomRight_greenPlay_xCord, bottomRight_greenPlay_yCord
 workerActive := "No"
 initialised := false
-currentAction := "Idle"
+currentAction := "Deactivated"
 filePath := A_ScriptDir "\config.txt"
 guiPosX := 0
 guiPosY := 0
 multiplier = 1
+lbHexCode := 0x1D1B19 
 
 ; ⭐ set these preferences, if you are not in a clan, put false
-; ⭐ put 1 for fishing zone 1, put 2 for fishing zone 2, this will tell the script where to take you if you disconnect and rejoin
+; ⭐ Put 1 if you want to go the 1st fishing zone, or 2 if you want to go to the 2nd fishing zone, this will tell the script where to go
 ; ⭐ don't put any of the changes in quotation marks
 hasClanBoost = true
 fishingZone = 2
 
-; ⭐ use F6 to get coordinates of a white pixel on the "Keep tapping to reel" text and put them here if pixel search is failing
+; ⭐ go the the pet simulator 99 game page, and use F6 to get the coordinates of the green play button
+; ⭐ You'll need to do this twice, once to capture the top left of the button, once to capture bottom right of the button
+topLeft_greenPlay_xCord := 1113
+topLeft_greenPlay_yCord := 373
+bottomRight_greenPlay_xCord := 1244
+bottomRight_greenPlay_yCord := 422
+
+; ⭐ use F6 to get coordinates of a white pixel on the "Keep tapping to reel" text and put them here if the reeling is slow
 whitePixel_xCord := 772 
 whitePixel_yCord := 597
 
@@ -29,23 +37,16 @@ whitePixel_yCord := 597
 lbPixel_xCord := 1715
 lbPixel_yCord := 81
 
-; ⭐ if for whatever reason, your leaderboard colour is very different, or you wish to use something else to check if you are back in the server, you can edit the colour here
-; ⭐ you shouldn't need to change this 
-lbHexCode := 0x1D1B19 
-
 ; ⭐ use F6 to get coordinates of the teleporter icon on the left of the screen
 tp_xCord := 176
 tp_yCord := 398
 
-; ⭐ F8 will simulate the script going into the map and scrolling a set number of times
-; ⭐ set the number of times the scroll button is used when going down the map starting from the top for each location
-; ⭐ you probably won't need to change this but you have to option to, just incase
-; ⭐ F8 will also use the location set in fishingZone variable as the target
+; ⭐ F8 allows you to scroll through the teleporter map, the number of times it will scroll will be here
+; ⭐ While scrolling through the teleporter, count how many times it moves until the place shows clearly and put here
 ShantyScrollCount = 5
 ForestScrollCount = 20
 
-; ⭐ F8 will allow you to set up the scrolling through map in the event you disconnect from the server
-; ⭐ use F6 to get coordinates of the center of the "shanty town" map icon when it comes into view after scrolling
+; ⭐ use F6 to get coordinates of the center of the "shanty town" teleport icon when it comes into view after using F8
 shanty_xCord := 965
 shanty_yCord := 528
 
@@ -58,14 +59,14 @@ forest_yCord := 619
 Gui, +AlwaysOnTop
 Gui, Color, FFFFFF 
 Gui, Font, s14
-Gui, Add, Text, x10 y10, F1 to activate
-Gui, Add, Text, x10 y40, F2 to deactivate
+Gui, Add, Text, x10 y10, F1 to activate fishing macro
+Gui, Add, Text, x10 y40, F2 to deactivate fishing macro
 Gui, Add, Text, x10 y70, F6 to get coordinates of mouse position
-Gui, Add, Text, x10 y100, F8 to simulate travel to fishing zone
-Gui, Add, Text, x10 y130, Script Enabled:
-Gui, Add, Text, x140 y130 w100 h30 Left vWorkerText, % workerActive
-Gui, Add, Text, x10 y160, Current Action: 
-Gui, Add, Text, x140 y160 w250 h60 Left vActionText, % currentAction 
+Gui, Add, Text, x10 y100 w400 h60, F8 to navigate teleporter map to get coordinates of target location button 
+Gui, Add, Text, x10 y160, Script Enabled:
+Gui, Add, Text, x140 y160 w100 h30 Left vWorkerText, % workerActive
+Gui, Add, Text, x10 y190, Current Action: 
+Gui, Add, Text, x140 y190 w250 h60 Left vActionText, % currentAction 
 
 file := FileOpen(filePath, "r")
 
@@ -77,7 +78,7 @@ if (file)
     guiPosX := lines[1]
     guiPosY := lines[2]
 
-    Gui, Show, % "x" guiPosX " y" guiPosY " w" 400 " h" 220, Collector's PS99 Fishing Macro
+    Gui, Show, % "x" guiPosX " y" guiPosY " w" 440 " h" 230, Collector's PS99 Fishing Macro
 }
 else 
 {
@@ -153,7 +154,16 @@ MainLoop()
         }
 
         ; Check if you disconnected from the server 
-        ImageSearch, FoundX, FoundY, 779, 440, 883, 476, *10 *Trans10 %A_ScriptDir%\Images\disconnect.png
+        ImageSearch, FoundX, FoundY, A_ScreenWidth * 0.25, A_ScreenHeight * 0.25, A_ScreenWidth * 0.5, A_ScreenHeight * 0.5, *10 *Trans10 %A_ScriptDir%\Images\disconnect.png
+
+        if (ErrorLevel = 0)
+        {
+            GuiControl,, ActionText, Detected disconnection, rejoining
+            Rejoin()
+        }
+
+        ; Check if instance of roblox is open
+        Process, Exist, RobloxPlayerBeta.exe
 
         if (ErrorLevel = 0)
         {
@@ -196,12 +206,11 @@ SaveGuiPos(filePath)
 
 Rejoin()
 {
-    Send, !{f4}
     Run, https://www.roblox.com/games/8737899170/
     Sleep, 10000  
 
     GuiControl,, ActionText, Checking website has loaded
-    ImageSearch, OutputCordX, OutputCordY, 1113, 373, 1244, 422, %A_ScriptDir%\Images\playButton.png
+    ImageSearch, OutputCordX, OutputCordY, topLeft_greenPlay_xCord, topLeft_greenPlay_yCord, bottomRight_greenPlay_xCord, bottomRight_greenPlay_yCord, %A_ScriptDir%\Images\playButton.png
 
     if (ErrorLevel = 0) 
     {
@@ -415,14 +424,42 @@ GoToFishingZone2(kickedType)
 
 F8::
     GuiControl,, WorkerText, Yes
+    GuiControl,, ActionText, Scrolling down teleporter map
+    ; Open map
+    MouseMove, tp_xCord, tp_yCord
+    Sleep, 100 
+    MouseMove, tp_xCord + 2, tp_yCord
+    Sleep, 100
+    Click
+    MouseMove, A_ScreenWidth - (A_ScreenWidth / 2), A_ScreenHeight - (A_ScreenHeight / 2)
+    Sleep, 10
+    MouseMove, A_ScreenWidth - (A_ScreenWidth / 2) + 2, A_ScreenHeight - (A_ScreenHeight / 2)
+    Sleep, 10
+
     if (fishingZone = 1)
+    {
+        Loop, %ShantyScrollCount%
         {
-            GoToFishingZone1(1)
+            Click, WheelDown
+            Sleep, 1000
         }
-        else if (fishingZone = 2)
+    }
+    else if (fishingZone = 2)
+    {
+        Loop, %ForestScrollCount%
         {
-            GoToFishingZone2(1)
+            Click, WheelDown
+            Sleep, 1000
         }
+    }
+
+    GuiControl,, WorkerText, No
+    GuiControl,, ActionText, Deactivated
+
+    MsgBox, if it scrolled past the target location teleport icon, you will need to edit the ScrollCount value in the script near the top, it will have a ⭐ on it
+    MsgBox, if the scrolling revealed the target location teleport icon as you expected, use F6 to get the coordinates of the button and add them to the script after closing this message.
+    SaveGuiPos(filePath)
+    Reload
 
 GuiClose: ; Closes the script if you click on the X button on the GUI
     SaveGuiPos(filePath)
