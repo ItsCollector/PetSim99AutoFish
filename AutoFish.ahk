@@ -78,7 +78,7 @@ if (file)
     guiPosX := lines[1]
     guiPosY := lines[2]
 
-    Gui, Show, % "x" guiPosX " y" guiPosY " w" 440 " h" 230, Collector's PS99 Fishing Macro
+    Gui, Show, % "x" guiPosX " y" guiPosY " w" 440 " h" 250, Collector's PS99 Fishing Macro
 }
 else 
 {
@@ -456,8 +456,8 @@ F8::
     GuiControl,, WorkerText, No
     GuiControl,, ActionText, Deactivated
 
-    MsgBox, if it scrolled past the target location teleport icon, you will need to edit the ScrollCount value in the script near the top, it will have a ⭐ on it
-    MsgBox, if the scrolling revealed the target location teleport icon as you expected, use F6 to get the coordinates of the button and add them to the script after closing this message.
+    MsgBox, If it scrolled past the target location teleport icon, you will need to edit the ScrollCount value in the script near the top, it will have a star on it
+    MsgBox, If the scrolling revealed the target location teleport icon as you expected, use F6 to get the coordinates of the button and add them to the script after closing this message.
     SaveGuiPos(filePath)
     Reload
 
