@@ -9,7 +9,7 @@ SetWorkingDir %A_ScriptDir%
 global workerActive, initialised, currentAction, filePath, guiPosX, guiPosY, hasClanBoost, multiplier, fishingZone, whitePixel_xCord, whitePixel_yCord, lbPixel_xCord, lbPixel_yCord, lbHexCode, shanty_xCord, shanty_yCord, forest_xCord, forest_yCord, tp_xCord, tp_yCord, ShantyScrollCount, ForestScrollCount
 workerActive := "No"
 initialised := false
-currentAction := "Detected disconnection, rejoining"
+currentAction := "Idle"
 filePath := A_ScriptDir "\config.txt"
 guiPosX := 0
 guiPosY := 0
