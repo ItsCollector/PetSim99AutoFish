@@ -24,10 +24,10 @@ fishingZone = 2
 
 ; ⭐ go the the pet simulator 99 game page, and use F6 to get the coordinates of the green play button
 ; ⭐ You'll need to do this twice, once to capture the top left of the button, once to capture bottom right of the button
-topLeft_greenPlay_xCord := 1113
-topLeft_greenPlay_yCord := 373
-bottomRight_greenPlay_xCord := 1244
-bottomRight_greenPlay_yCord := 422
+topLeft_greenPlay_xCord := 0
+topLeft_greenPlay_yCord := 0
+bottomRight_greenPlay_xCord := A_ScreenWidth
+bottomRight_greenPlay_yCord := A_ScreenHeight
 
 ; ⭐ use F6 to get coordinates of a white pixel on the "Keep tapping to reel" text and put them here if the reeling is slow
 whitePixel_xCord := 772 
