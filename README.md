@@ -9,7 +9,7 @@ When you download the macro file, extract all and open the "AutoFish.ahk" file
 
 YouTube demonstration (out of date, please update Collector): https://www.youtube.com/watch?v=SnuKIOsgnUc&t=4s
 
-For whatever reason the main script isn't in a separate folder when you download, please put it in one so the config file created when you first exit the macro saves in the same directory.
+Ensure "Background Transparency" in roblox ingame settings is set to maximum opaque so there is no transparency with any of the roblox menus.
 
 You'll need F6 if you play on resolutions other than 1920x1080 to edit line 16 and 17. This is the coordinates for any white pixel on the "Keep tapping to reel" text.
 
