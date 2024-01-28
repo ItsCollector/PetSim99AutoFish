@@ -38,6 +38,13 @@ if (file)
     guiPosX := lines[1]
     guiPosY := lines[2]
 
+    ; bug fix where value saved is -32k, -32k. Not sure why its happening but this will reset positon
+    if (guiPosX = -32000 || guiPosY = -32000) 
+    {
+        guiPosX := 0
+        guiPosY := 0 
+    }
+
     Gui, Show, % "x" guiPosX " y" guiPosY " w" 350 " h" 170, Collector's PS99 Fishing Macro
 }
 else 
