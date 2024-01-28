@@ -1,4 +1,4 @@
-Requires AutoHotKey v2 installed on your system
+Requires AutoHotKey v1.1 installed on your system
 
 Download it from here: https://www.autohotkey.com/
 
