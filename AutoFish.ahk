@@ -144,3 +144,20 @@ F6:: ; F6 to grab coordinates of mouse position, use if you need to change any o
     MouseGetPos, MouseX, MouseY
     MsgBox, Mouse Coordinates:`nX: %MouseX%`nY: %MouseY%
     return
+
+F7:: ; white pixel check debug command
+    colour := 0xFFFFFF
+    PixelSearch, OutputVarX, OutputVarY, %xCord%, %yCord%, %xCord%, %yCord%, %colour%   
+
+    if (ErrorLevel = 0)
+    {
+        MsgBox, White pixel found
+    }
+    else if (ErrorLevel = 1)
+    {
+        MsgBox, White pixel not found, reload the script if you changed it or recapture the coordinates
+    }
+    else if (ErrorLevel = 2)
+    {
+        MsgBox, Pixel search failed to execute
+    }
