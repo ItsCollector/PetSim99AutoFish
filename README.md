@@ -12,9 +12,9 @@ YouTube demonstration (out of date, please update Collector): https://www.youtub
 
 For whatever reason the main script isn't in a separate folder when you download, please put it in one so the config file created when you first exit the macro saves in the same directory.
 
-You'll need F6 if you play on resolutions other than 1920x1080 to edit line 16 and 17. This is the coordinates for any white pixel on the "Keep tapping to reel" text.
+You'll need F6 if you play on resolutions other than 1920x1080 to edit line 17 and 18. This is the coordinates for any white pixel on the "Keep tapping to reel" text.
 
-If you have poor internet connection and you reel in before getting a bite, increase the sleep delay on line 107. 
+If you have poor internet connection and you reel in before getting a bite, increase the sleep delay on line 108. 
 
 Open in notepad or a code editor to change the lines specified
 
