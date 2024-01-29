@@ -18,6 +18,8 @@ If you have poor internet connection and you reel in before getting a bite, incr
 
 Open in notepad or a code editor to change the lines specified
 
+MAKE SURE YOU SAVE AND REOPEN THE SCRIPT TO APPLY CHANGES
+
 The code is commented so you may understand how it works. Enjoy easy afk fishing!
 
 Future plans:
