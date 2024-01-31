@@ -15,4 +15,4 @@ For whatever reason the main script isn't in a separate folder when you download
 
 Future plans:
 - I am working on disconnect detection but it is a lot of work. Preston has system in place to try making macros hard as possible to setup so give me some more time. 
-- QoL improvements to GUI 
+
