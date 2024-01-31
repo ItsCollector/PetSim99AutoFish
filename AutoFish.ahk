@@ -78,6 +78,13 @@ if (file)
     guiPosX := lines[1]
     guiPosY := lines[2]
 
+    ; bug fix where value saved is -32k, -32k. Not sure why its happening but this will reset positon
+    if (guiPosX = -32000 || guiPosY = -32000) 
+    {
+        guiPosX := 0
+        guiPosY := 0 
+    }
+
     Gui, Show, % "x" guiPosX " y" guiPosY " w" 440 " h" 250, Collector's PS99 Fishing Macro
 }
 else 
@@ -474,4 +481,23 @@ F2:: ; Reloads script, use when you want to stop the macro without closing it
 F6:: ; F6 to grab coordinates of mouse position, use if you need to change any of the coordinates
     MouseGetPos, MouseX, MouseY
     MsgBox, Mouse Coordinates:`nX: %MouseX%`nY: %MouseY%
+    return
+
+F7::
+    colour := 0xFFFFFF
+    PixelSearch, DebugOutX, DebugOutY, %xCord%, %yCord%, %xCord%, %yCord%, %colour%   
+
+    if (ErrorLevel = 0)
+    {
+        MsgBox, White pixel found
+    }
+    else if (ErrorLevel = 1)
+    {
+        MsgBox, White pixel not found, reload the script if you changed it or recapture the coordinates
+    }
+    else if (ErrorLevel = 2)
+    {
+        MsgBox, Pixel search failed to execute
+    }
+
     return
