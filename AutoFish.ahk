@@ -100,6 +100,8 @@ MainLoop()
     ; this is to allow the rod to be cast into the water, if there is no bobber icon on the cursor then the rod can't be cast
     if (initialised = false) 
     {
+        WinActivate, Roblox
+
         GuiControl,, ActionText, Initialising
         GuiControl,, WorkerText, Yes
 
@@ -479,12 +481,16 @@ F2:: ; Reloads script, use when you want to stop the macro without closing it
     return
 
 F6:: ; F6 to grab coordinates of mouse position, use if you need to change any of the coordinates
+    WinActivate, Roblox
+    Sleep, 50
     MouseGetPos, MouseX, MouseY
     MsgBox, Mouse Coordinates:`nX: %MouseX%`nY: %MouseY%
     return
 
 F7::
     colour := 0xFFFFFF
+    WinActivate, Roblox
+    Sleep, 50
     PixelSearch, DebugOutX, DebugOutY, %xCord%, %yCord%, %xCord%, %yCord%, %colour%   
 
     if (ErrorLevel = 0)
