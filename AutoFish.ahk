@@ -9,64 +9,90 @@ SetWorkingDir %A_ScriptDir%
 workerActive := "No"
 initialised := false
 currentAction := "Idle"
-filePath := A_ScriptDir "\config.txt"
-guiPosX := 0
-guiPosY := 0
+guiPosFile := A_ScriptDir "\gui_position.txt"
+whitePixelCordsFile := A_ScriptDir "\white_pixel_cords.txt"
+imageFilePath := A_ScriptDir "\HelpImage.png"
+guiPosX := 5
+guiPosY := 5
+xCord := 772
+yCord := 596
+global guiPosX, guiPosY, xCord, yCord
 
-; use F6 to get coordinates of a white pixel on the "Keep tapping to reel" text and put them here if pixel search is failing
-xCord := 772 
-yCord := 597
+; ⭐ Delay between casting rod and clicking to start mini game, you may edit this if necessar
 
 ; Create GUI
 Gui, +AlwaysOnTop
 Gui, Color, FFFFFF 
 Gui, Font, s14
-Gui, Add, Text, x10 y10, F1 to activate
-Gui, Add, Text, x10 y40, F2 to deactivate
-Gui, Add, Text, x10 y70, F6 to get coordinates of mouse position
-Gui, Add, Text, x10 y100, Script Enabled:
-Gui, Add, Text, x140 y100 w100 h30 Center vWorkerText, % workerActive
-Gui, Add, Text, x10 y130, Current Action: 
-Gui, Add, Text, x140 y130 w100 h30 Center vActionText, % currentAction 
+Gui, Add, Tab2, w370 h200, Status||Config
+Gui, Add, Text, x25 y50, F1 to activate
+Gui, Add, Text, x25 y80, F2 to deactivate
+Gui, Add, Text, x25 y110, Script Enabled:
+Gui, Add, Text, x160 y110 w100 h30 left vWorkerText, % workerActive
+Gui, Add, Text, x25 y140, Current Action: 
+Gui, Add, Text, x160 y140 w100 h30 left vActionText, % currentAction 
 
-file := FileOpen(filePath, "r")
+; tab 2
+Gui, Tab, 2
+Gui, Add, Text, x25 y50 w350, F7 to run white pixel check to see if it's working properly
+Gui, Add, Button, gCaptureWhitePixelCords w350, Click to capture white pixel coordinates
+Gui, Add, Text
 
-if (file)
-{
-    content := file.Read()
-    file.Close()
-    lines := StrSplit(content, ",")
-    guiPosX := lines[1]
-    guiPosY := lines[2]
+GetGuiPositionCords(guiPosFile)
+GetWhitePixelCords(whitePixelCordsFile)
 
-    ; bug fix where value saved is -32k, -32k. Not sure why its happening but this will reset positon
-    if (guiPosX = -32000 || guiPosY = -32000) 
+RunOnGuiShow:
+return
+
+; Function to be called when the button is clicked
+CaptureWhitePixelCords:
+    SplashImage, %imageFilePath%, m2 fm20, ,Right click on a white pixel on the "keep tapping to reel" text., Tip Card
+    ;MsgBox, Right click on a white pixel on the "keep tapping to reel" text
+    WinActivate, Roblox
+    Sleep, 200
+
+    while (WinExist("Tip Card"))
     {
-        guiPosX := 0
-        guiPosY := 0 
+        if (WinExist("Tip Card") = 0)
+        {
+            break
+        }
+
+        Sleep, 100
     }
 
-    Gui, Show, % "x" guiPosX " y" guiPosY " w" 350 " h" 170, Collector's PS99 Fishing Macro
-}
-else 
-{
-    Gui, Show, w350 h170, Collector's PS99 Fishing Macro
-}
+    Loop
+    {
+        Sleep, 100
+        if (GetKeyState("RButton", "P")) ; Check if the right mouse button is pressed
+        {
+            break
+        }    
+    }
+
+    MouseGetPos, MouseX, MouseY
+    xCord := MouseX
+    yCord := MouseY
+
+    Click, Right, , U
+    SaveWhitePixelCords(whitePixelCordsFile, MouseX, MouseY)
+    return
 
 F1::
     ; this is to allow the rod to be cast into the water, if there is no bobber icon on the cursor then the rod can't be cast
+    WinActivate, Roblox
     if (initialised = false) 
     {
         GuiControl,, ActionText, Initialising
         GuiControl,, WorkerText, Yes
 
         Loop, 3
-            {
-                MouseMove, A_ScreenWidth - (A_ScreenWidth / 3), A_ScreenHeight - (A_ScreenHeight * 0.6)
-                Sleep, 100
-                MouseMove, A_ScreenWidth - (A_ScreenWidth / 2), A_ScreenHeight - (A_ScreenHeight * 0.6)
-                Sleep, 100
-            }
+        {
+            MouseMove, A_ScreenWidth - (A_ScreenWidth / 3), A_ScreenHeight - (A_ScreenHeight * 0.6)
+            Sleep, 100
+            MouseMove, A_ScreenWidth - (A_ScreenWidth / 2), A_ScreenHeight - (A_ScreenHeight * 0.6)
+            Sleep, 100
+        }
         
         MouseMove, A_ScreenWidth - (A_ScreenWidth / 2), A_ScreenHeight - (A_ScreenHeight / 2)
         initialised := true
@@ -75,6 +101,7 @@ F1::
     ; Fishing loop, this is where the magic happens
     while (true)
     { 
+        WinActivate, Roblox
         ; Coordinates and colour hex for a white pixel when the fishing mini-games shows ingame
         ; Change these if you are not on 1920x1080p, use F6 to grab any white pixel from mini-game text around the bottom
         ; middle of screen
@@ -112,11 +139,60 @@ F1::
 
     return
 
+GetGuiPositionCords(guiPosFile)
+{
+    file := FileOpen(guiPosFile, "r")
+
+    if (file)
+    {
+        content := file.Read()
+        file.Close()
+        lines := StrSplit(content, ",")
+        guiPosX := lines[1]
+        guiPosY := lines[2]
+
+        ; bug fix where value saved is -32k, -32k. Not sure why its happening but this will reset positon
+        if (guiPosX = -32000 || guiPosY = -32000) 
+        {
+            guiPosX := 0
+            guiPosY := 0 
+        }
+    }
+
+    Gui, Show, % "x" guiPosX " y" guiPosY " w" 400 " h" 220, Collector's PS99 Fishing Macro, RunOnGuiShow
+}
+
+GetWhitePixelCords(whitePixelCordsFile)
+{
+    file := FileOpen(whitePixelCordsFile, "r")
+
+    if (file)
+    {
+        content := file.Read()
+        file.Close()
+        lines := StrSplit(content, ",")
+        xCord := lines[1]
+        yCord := lines[2]
+    
+        ; bug fix where value saved is -32k, -32k. Not sure why its happening but this will reset positon
+        if (xCord = -32000 || yCord = -32000) 
+        {
+            MsgBox, File is bugged, please recapture white pixel coordinates
+        }
+    }
+    else
+    {
+        MsgBox, First time use detected, make sure you go to Config tab on the macro window to set up
+    }
+
+    return
+}
+
 ; Saves position of GUI to config file
-SaveGuiPos(filePath)
+SaveGuiPos(guiPosFile)
 {
     WinGetPos, OutX, OutY, OutWidth, OutHeight, Collector's PS99 Fishing Macro
-    cordfile := FileOpen(filePath, "w")
+    cordfile := FileOpen(guiPosFile, "w")
 
     if (cordfile) 
     {
@@ -131,22 +207,44 @@ SaveGuiPos(filePath)
     return
 }
 
+SaveWhitePixelCords(whitePixelCordsFile, xCord, yCord)
+{
+    cordfile := FileOpen(whitePixelCordsFile, "w")
+
+    if (cordfile) 
+    {
+        cordfile.Write(xCord "," yCord)
+        cordfile.Close()
+    } 
+    else 
+    {
+        MsgBox, Failed to open the file for writing.
+    }
+
+    MsgBox, Saved coordinates: %xCord%, %yCord%
+    WinActivate, Roblox
+    return
+}
+
 GuiClose: ; Closes the script if you click on the X button on the GUI
-    SaveGuiPos(filePath)
+    SaveGuiPos(guiPosFile)
     ExitApp
     return
 
 F2:: ; Reloads script, use when you want to stop the macro without closing it
-    SaveGuiPos(filePath)
+    SaveGuiPos(guiPosFile)
     Reload
     return
 
 F6:: ; F6 to grab coordinates of mouse position, use if you need to change any of the coordinates
+    WinActivate, Roblox
+    Sleep, 50
     MouseGetPos, MouseX, MouseY
-    MsgBox, Mouse Coordinates:`nX: %MouseX%`nY: %MouseY%
+    SaveWhitePixelCords(whitePixelCordsFile, MouseX, MouseY)
     return
 
 F7:: ; white pixel check debug command
+    WinActivate, Roblox
     colour := 0xFFFFFF
     PixelSearch, OutputVarX, OutputVarY, %xCord%, %yCord%, %xCord%, %yCord%, %colour%   
 
@@ -162,3 +260,4 @@ F7:: ; white pixel check debug command
     {
         MsgBox, Pixel search failed to execute
     }
+
