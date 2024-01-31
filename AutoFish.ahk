@@ -61,7 +61,7 @@ CaptureWhitePixelCords:
 
     Loop
     {
-        Sleep, 100
+        Sleep, 50
         if (GetKeyState("RButton", "P")) ; Check if the right mouse button is pressed
         {
             break
