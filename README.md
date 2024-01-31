@@ -8,7 +8,7 @@ The macro contains two tabs:
 - one to view macro status
 - another for configuring the white pixel check on the "keep tapping to reel" text
 
-YouTube demonstration (out of date, please update Collector): https://www.youtube.com/watch?v=SnuKIOsgnUc&t=4s
+YouTube demonstration: https://www.youtube.com/watch?v=eek5bOYt9-c
 Set-up instructions will be shown when you first start up
 
 For whatever reason the main script isn't in a separate folder when you download, please put it in one so the config file created when you first exit the macro saves in the same directory.
