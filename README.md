@@ -2,28 +2,18 @@ Requires AutoHotKey v2 installed on your system
 
 Download it from here: https://www.autohotkey.com/
 
-When you download the macro file, extract all and open the "AutoFish.ahk" file
-- F1 to activate the macro when it's open
-- F2 to deactivate the macro when it's active
-- F6 to grab coordinates of the current mouse positon, will show in a message box on screen
+Disconnect and reconnect system is stable on this verison I am working on. I want to do a GUI overhaul which will allow you to enter in settings much easier than editing the script before. 
 
-YouTube demonstration (out of date, please update Collector): https://www.youtube.com/watch?v=SnuKIOsgnUc&t=4s
+This is a pre-release which I won't make a video on, I wanted those who chose to come to my discord server to have early access to this powerful feature.
 
-Ensure "Background Transparency" in roblox ingame settings is set to maximum opaque so there is no transparency with any of the roblox menus.
+You aren't required to switch to this if you don't want to, it does require a bit of setup work with the script manually. Version 2 is completely fine to use for the next few days still, while I get this GUI stuff sorted
 
-You'll need F6 if you play on resolutions other than 1920x1080 to edit line 16 and 17. This is the coordinates for any white pixel on the "Keep tapping to reel" text.
+If you choose to try v3.0-beta , follow the instructions inside the script where there are stars ⭐ 
 
-Lines you may have to edit depending on your system and internet connection (I can't make this suit everyone without being very generous on the timings). Lines grouped together on the list serve the same purpose so make them the same if you change them.
-- 58 and 60
-- 84
-- 92
-- 94 (would not recommend changing for anyone but you may increase it ever so slightly if necessary)
-- 100
+F1 - Start fishing
+F2 - Stop fishing
+F6 - Creates a message box containing the coordinates of your mouse cursor positon (x, y)
+F7 - Debug command to check if white pixel is found
+F8 - Opens teleport menu and scrolls down number of time according to fishing area selected, a message box will appear to remind you to get the coordinates of the target location teleport icon so you can add those into the script. Make sure you start from the top of the map menu before running the command, and the teleporter map is closed
 
-Open in notepad or a code editor to change the lines specified
-
-The code is commented so you may understand how it works. Enjoy easy afk fishing!
-
-Future plans:
-- I am working on disconnect detection but it is a lot of work. Preston has system in place to try making macros hard as possible to setup so give me some more time. 
-- QoL improvements to GUI 
+Ensure when you download the files, it contains a folder with 2 images and your main script outside the images folder. It will look something like the image I've posted below.
