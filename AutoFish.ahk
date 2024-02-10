@@ -18,8 +18,6 @@ xCord := 772
 yCord := 596
 global guiPosX, guiPosY, xCord, yCord
 
-; ⭐ Delay between casting rod and clicking to start mini game, you may edit this if necessar
-
 ; Create GUI
 Gui, +AlwaysOnTop
 Gui, Color, FFFFFF 
@@ -63,7 +61,7 @@ CaptureWhitePixelCords:
 
     Loop
     {
-        Sleep, 100
+        Sleep, 50
         if (GetKeyState("RButton", "P")) ; Check if the right mouse button is pressed
         {
             break
